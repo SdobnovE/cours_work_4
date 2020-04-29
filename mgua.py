@@ -45,8 +45,7 @@ class MGUA:
         
         for i in range(m):
             X1[:,0] = self.data[:,i]
-            print(X1)
-            print(self.y)
+            
             self.model.fit(X1, self.y)
             if iter_buf < self.size_buf:
                 tmp = self.model.predict(X1)
