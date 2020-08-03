@@ -44,7 +44,9 @@ class MGUA:
         X1 = np.array([[float(i) for i in range(1)] for j in range(n)])
         
         for i in range(m):
-            X1[:,0] = self.data[:,i]
+            print(self.data.shape)
+            for j in range(X1.shape[1]):
+                X1[j,0] = self.data[j,i]
             
             self.model.fit(X1, self.y)
             if iter_buf < self.size_buf:
@@ -96,8 +98,9 @@ class MGUA:
             for i in range(self.buf_size_ar[k - 1]):
                 for j in range(0, m):  
                     #print(data[:,i].shape)
-                    X2[:, 0] = self.buf[k - 1, :, i]
-                    X2[:, 1] = self.data[:, j]
+                    for ii in range(self.buf.shape[1]):
+                        X2[ii, 0] = self.buf[k - 1, ii, i]
+                        X2[ii, 1] = self.data[ii, j]
                     self.model.fit(X2, self.y)
                     if iter_buf < self.size_buf:
                         tmp = self.model.predict(X2)
@@ -136,7 +139,7 @@ class MGUA:
                             self.buf[k, :, ind] = tmp[:]
             self.buf_size_ar[k] = iter_buf
 
-            print("selection", k + 1, "from", self.num_selections)
+#             print("selection", k + 1, "from", self.num_selections)
             
             
     def fit(self, X, y):
